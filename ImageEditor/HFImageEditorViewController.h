@@ -30,7 +30,6 @@ typedef void(^HFImageEditorDoneCallback)(UIImage *image, BOOL canceled);
 @property (nonatomic, readonly) CGRect cropBoundsInSourceImage;
 
 @property (nonatomic, strong) UIImage *imageForBuilder;
-@property (nonatomic, strong) Theme *theme;
 @property (nonatomic) BOOL isLockscreen;
 
 - (void)resetImage:(BOOL)animated;

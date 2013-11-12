@@ -191,6 +191,12 @@ static const NSTimeInterval kAnimationIntervalTransform = 0.2;
 
 #pragma mark -
 -(void)resetImage:(BOOL)animated {
+	[self view]; // made sure the view is loaded;
+
+	if (!self.imageView) {
+		return;
+	}
+
     CGFloat w = 0.0f;
     CGFloat h = 0.0f;
     CGFloat sourceAspect = self.sourceImage.size.height/self.sourceImage.size.width;
@@ -207,12 +213,16 @@ static const NSTimeInterval kAnimationIntervalTransform = 0.2;
     if(self.checkBounds) {
         self.minimumScale = 1;
     }
-    
+
+	self.imageView.transform = CGAffineTransformIdentity;
+	CGRect r = CGRectMake(CGRectGetMidX(self.cropRect) - w/2, CGRectGetMidY(self.cropRect) - h/2,w,h);
+	CGAffineTransform t = CGAffineTransformMakeScale(self.scale, self.scale);
+
     void (^doReset)(void) = ^{
-        self.imageView.transform = CGAffineTransformIdentity;
-        self.imageView.frame = CGRectMake(CGRectGetMidX(self.cropRect) - w/2, CGRectGetMidY(self.cropRect) - h/2,w,h);
-        self.imageView.transform = CGAffineTransformMakeScale(self.scale, self.scale);
+        self.imageView.frame = r;
+        self.imageView.transform = t;
     };
+
     if(animated) {
         self.view.userInteractionEnabled = NO;
         [UIView animateWithDuration:kAnimationIntervalReset animations:doReset completion:^(BOOL finished) {

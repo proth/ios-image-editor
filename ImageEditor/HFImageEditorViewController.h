@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "GAI.h"
 
 @protocol HFImageEditorFrame
 @required
@@ -9,7 +10,7 @@
 
 typedef void(^HFImageEditorDoneCallback)(UIImage *image, BOOL canceled);
 
-@interface HFImageEditorViewController : UIViewController<UIGestureRecognizerDelegate>
+@interface HFImageEditorViewController : GAITrackedViewController<UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) IBOutlet UIView<HFImageEditorFrame> *frameView;
 @property (nonatomic, strong) HFImageEditorDoneCallback doneCallback;
